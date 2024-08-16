@@ -38,6 +38,28 @@ class CommentManager extends AbstractEntityManager
         return null;
     }
 
+
+   /**
+     * Récupère le nombre de commentaires associés à un article.
+     * @param 
+     * @return
+     */
+   /* public function getCommentNumber() : array
+    {
+        $sql = "SELECT id_article, COUNT(id_article) FROM comment GROUP BY id_article";
+        $result = $this->db->query($sql);
+        $commentNumber = $result->fetch();
+        //var_dump($commentNumber);
+        return $commentNumber;
+    }
+        */
+
+
+
+
+
+
+
     /**
      * Ajoute un commentaire.
      * @param Comment $comment : l'objet Comment à ajouter.

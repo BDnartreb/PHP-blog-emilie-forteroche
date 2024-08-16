@@ -22,7 +22,7 @@ try {
             $articleController->showApropos();
             break;
         
-        case 'showArticle': 
+        case 'showArticle':
             $articleController = new ArticleController();
             $articleController->showArticle();
             break;
@@ -44,6 +44,21 @@ try {
             $adminController->showAdmin();
             break;
 
+        case 'stats': 
+            $adminController = new AdminController();
+            $adminController->showStats();
+            break;
+            
+        case 'showArticleAdmin': 
+            $adminController = new AdminController();
+            $adminController->showArticleAdmin();
+            break;
+                
+        case 'deleteComment': 
+            $commentController = new CommentController();
+            $commentController->deleteComment();
+            break;
+                
         case 'connectionForm':
             $adminController = new AdminController();
             $adminController->displayConnectionForm();

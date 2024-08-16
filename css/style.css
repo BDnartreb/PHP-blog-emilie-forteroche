@@ -273,6 +273,14 @@ a.info {
     color: var(--quoteColor);
 }
 
+.comments .fa-trash-can {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    font-size: 30px;
+    color: grey;
+}
+
 /* On redéfinit certaines parties du "info" pour l'affichage dans les commentaires */
 .detailComment .info {
     margin: 5px 0 5px 0;
@@ -330,6 +338,18 @@ a.info {
 
 .articleLine .content {
     flex-grow: 1;
+    min-width: 600px;
+    width: 600px;
+}
+
+.articleLine .counter {
+    flex-grow: 1;
+    min-width: 150px;
+    width: 150px;
+}
+
+.articleLine .date {
+    min-width: 180px;
 }
 
 .articleLine > div {

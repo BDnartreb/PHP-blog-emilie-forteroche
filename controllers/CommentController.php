@@ -44,4 +44,24 @@ class CommentController
         // On redirige vers la page de l'article.
         Utils::redirect("showArticle", ['id' => $idArticle]);
     }
+
+    public function deleteComment() : void
+    {
+        // Récupération de l'id de l'article demandé.
+        $id = Utils::request("id", -1);
+                
+        $commentManager = new CommentManager();
+        $comment = $commentManager->getCommentById($id);
+        $result = $commentManager->deleteComment($comment);
+
+        if (!$result) {
+            throw new Exception("Une erreur est survenue lors de l'ajout du commentaire.");
+        }
+        
+        // On redirige vers la page de l'article.
+        $idArticle = $comment->getIdArticle();
+        Utils::redirect("showArticleAdmin", ['id' => $idArticle]);
+    }
+
+
 }

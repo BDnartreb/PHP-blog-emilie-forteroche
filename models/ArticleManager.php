@@ -11,13 +11,22 @@ class ArticleManager extends AbstractEntityManager
      */
     public function getAllArticles() : array
     {
-        $sql = "SELECT * FROM article";
+        //$sql = "SELECT * FROM article";
+        $sql = "SELECT a.*, COUNT(DISTINCT c.id) as commentCounter FROM article a LEFT JOIN comment c ON a.id = c.id_article GROUP BY c.id_article"; 
+        //$sql = "SELECT * FROM article a LEFT JOIN comment c ON c.id a.article_id";
+       //$sql = "SELECT DISTINCT(a.*), COUNT(c.id) FROM article a LEFT JOIN comment c ON a.id = c.id_article";
         $result = $this->db->query($sql);
         $articles = [];
 
-        while ($article = $result->fetch()) {
-            $articles[] = new Article($article);
+        while ($articleArray = $result->fetch()) {
+            $article = new Article($articleArray);
+            $article->setCommentCounter(2);// remplacer 2 par ($artileArray[nom colonne]); cf nom colonne dans var_dump ou ajouter nom dans requete select
+          //  $article->setCommentCounter(["commentCounter"]);
+            
+            $articles[] = $article;
+            var_dump($articleArray);
         }
+        
         return $articles;
     }
     
@@ -36,6 +45,53 @@ class ArticleManager extends AbstractEntityManager
         }
         return null;
     }
+
+        /**
+         * Increase number of article views
+         * @return void
+         */
+        
+        public function increaseViewCounter(Article $article) : void
+        {
+            $sql = "UPDATE article SET view_counter = view_counter+1 WHERE id = :id";
+  //          $sql = "UPDATE article SET view_counter = :view_counter WHERE id = :id";
+            $this->db->query($sql, [
+ // inutle               'view_counter' => $article->getViewCounter(),
+                'id' => $article->getId()
+            ]);
+        }
+
+    /**
+     * NE FONCTIONNE PAS !!!!!
+     * Récupère les statistiques.
+     * @return array : un tableau d'objets Stats[].
+     */
+    /*public function getStats() : array
+    {
+        $sqlArticle = "SELECT id, title, content, date_creation, view_counter FROM article";
+        $sqlComment = "SELECT id_article, COUNT(id_article) FROM comment GROUP BY id_article";
+
+        $resultArticle = $this->db->query($sqlArticle);
+        $resultComment = $this->db->query($sqlComment);
+        $stats = [];
+
+        while ($row = $resultArticle->fetch()) {
+            while ($rowComment = $resultComment->fetch()){
+                if ($row['id'] == $rowComment['id_article'])
+                    $stat = [
+                        'commentNumber' => $rowComment["COUNT(id_article)"]
+                    ];            
+                $stat = [
+                    'title' => $row['title'],
+                    'content' => $row['content'],
+                    'date_creation' => $row['date_creation'],
+                    'view_counter' => $row['view_counter'],
+                    ];
+            }
+            $stats[] = $stats;
+        }
+        return $stats;
+    }*/
 
     /**
      * Ajoute ou modifie un article.

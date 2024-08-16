@@ -26,6 +26,53 @@ class AdminController {
     }
 
     /**
+     * Affiche la page de statistiques (nombre de vues)
+     * @return void
+     */
+    public function showStats() : void
+    {
+        // On vérifie que l'utilisateur est connecté.
+        $this->checkIfUserIsConnected();
+
+        // On récupère les articles.
+        $articleManager = new ArticleManager();
+        $articles = $articleManager->getAllArticles();
+  
+        // On affiche la page d'administration.
+        $view = new View("Statistiques");
+        $view->render("stats", [
+            'articles' => $articles
+        ]);
+    }
+
+    
+    /**
+     * Affiche la page de suppression des commentaires
+     * @return void
+     */
+    public function showArticleAdmin() : void
+    {
+        // On vérifie que l'utilisateur est connecté.
+        $this->checkIfUserIsConnected();
+
+        // Récupération de l'id de l'article demandé.
+        $id = Utils::request("id", -1);
+
+        $articleManager = new ArticleManager();
+        $article = $articleManager->getArticleById($id);
+
+        if (!$article) {
+            throw new Exception("L'article demandé n'existe pas.");
+        }
+
+        $commentManager = new CommentManager();
+        $comments = $commentManager->getAllCommentsByArticleId($id);
+
+        $view = new View($article->getTitle());
+        $view->render("detailArticleAdmin", ['article' => $article, 'comments' => $comments]);
+    }
+
+    /**
      * Vérifie que l'utilisateur est connecté.
      * @return void
      */

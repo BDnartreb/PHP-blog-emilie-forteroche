@@ -11,6 +11,8 @@
     private string $content = "";
     private ?DateTime $dateCreation = null;
     private ?DateTime $dateUpdate = null;  
+    public int $viewCounter = 0;
+    public int $commentCounter = 0;
 
     /**
      * Setter pour l'id de l'utilisateur. 
@@ -126,5 +128,39 @@
     public function getDateUpdate() : ?DateTime 
     {
         return $this->dateUpdate;
+    }
+
+        /**
+     * Setter for article view counter
+     */
+    public function setViewCounter(int $viewCounter) : void 
+    {
+        $this->viewCounter = $viewCounter;
+    }
+
+    /**
+     * Getter for article view counter
+     * @return int
+     */
+    public function getViewCounter() : int 
+    {
+        return $this->viewCounter;
+    }
+
+       /**
+     * Setter for article comment counter
+     */
+    public function setCommentCounter(int $commentCounter) : void 
+    {
+        $this->commentCounter = $commentCounter;
+    }
+
+    /**
+     * Getter for article comment counter
+     * @return int
+     */
+    public function getCommentCounter() : int 
+    {
+        return $this->commentCounter;
     }
  }

@@ -31,12 +31,16 @@ class ArticleController
             throw new Exception("L'article demandé n'existe pas.");
         }
 
+        $articleManager->increaseViewCounter($article);
+
         $commentManager = new CommentManager();
         $comments = $commentManager->getAllCommentsByArticleId($id);
 
         $view = new View($article->getTitle());
         $view->render("detailArticle", ['article' => $article, 'comments' => $comments]);
+
     }
+
 
     /**
      * Affiche le formulaire d'ajout d'un article.
