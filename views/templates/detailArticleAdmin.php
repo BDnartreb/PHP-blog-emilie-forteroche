@@ -20,7 +20,7 @@
 
 <div class="comments">
     <h2 class="commentsTitle">Vos Commentaires</h2>
-    <?php 
+    <?php /*<?= Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer cet article ?") ?>*/
         if (empty($comments)) {
             echo '<p class="info">Aucun commentaire pour cet article.</p>';
         } else {

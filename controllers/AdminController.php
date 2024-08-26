@@ -47,6 +47,31 @@ class AdminController {
 
     
     /**
+     * Tri la page de statistiques
+     * @return void
+     */
+    public function sortStats() : void
+    {
+        // On vérifie que l'utilisateur est connecté.
+        $this->checkIfUserIsConnected();
+
+        // Récupération de l'id de l'article demandé.
+        $field = Utils::request("field", -1);
+        $sortOrder = Utils::request("sortOrder", -1);
+
+        // On récupère les articles.
+        $articleManager = new ArticleManager();
+        $articles = $articleManager->getAllArticlesSorted($field, $sortOrder);
+  
+        // On affiche la page d'administration.
+        $view = new View("Statistiques");
+        $view->render("stats", [
+            'articles' => $articles
+        ]);
+    }
+
+
+    /**
      * Affiche la page de suppression des commentaires
      * @return void
      */

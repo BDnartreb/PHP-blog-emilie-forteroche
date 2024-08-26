@@ -89,6 +89,13 @@ try {
             $adminController->deleteArticle();
             break;
 
+        // Section sort stats 
+
+        case 'Sort':
+            $adminController = new AdminController();
+            $adminController->sortStats();
+            break;
+
         default:
             throw new Exception("La page demandée n'existe pas.");
     }

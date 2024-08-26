@@ -352,6 +352,16 @@ a.info {
     min-width: 180px;
 }
 
+.evenLine {
+    background-color: rgb(255, 179, 47);
+}
+
+.fa-sort-up .fa-sort-down {
+    display: flex;
+    justify-content: center;
+    color:red;
+}
+
 .articleLine > div {
     padding: 20px;
     border: 1px solid var(--backgroundColor);
