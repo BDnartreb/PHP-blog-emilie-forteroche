@@ -322,7 +322,7 @@ a.info {
 }
 
 .articleLine {
-    display: flex; 
+    display: flex;
 }
 
 .articleLine div {
@@ -360,6 +360,12 @@ a.info {
     display: flex;
     justify-content: center;
     color:red;
+    background-color: #3f56a4;
+}
+
+.fa-sort-up:visited {
+    color: red;
+
 }
 
 .articleLine > div {

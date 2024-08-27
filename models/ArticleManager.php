@@ -9,10 +9,15 @@ class ArticleManager extends AbstractEntityManager
      * Récupère tous les articles.
      * @return array : un tableau d'objets Article.
      */
-    public function getAllArticles() : array
+    public function getAllArticles($field="id", $sortOrder="ASC") : array
     {
+        //Pour sécurité vérifier que $field correspond à un élément d'une white_liste, liste de valeurs autorisées
+        $field = $this->white_list($field, ["id", "title","view_counter", "commentCounter", "date_creation"], "Invalid field name");
+        $sortOrder = $this->white_list($sortOrder, ["ASC","DESC"], "Invalid ORDER BY direction");
+        
         $sql = "SELECT a.*, COUNT(DISTINCT c.id) as commentCounter FROM article a 
-        LEFT JOIN comment c ON a.id = c.id_article GROUP BY c.id_article"; 
+        LEFT JOIN comment c ON a.id = c.id_article GROUP BY c.id_article ORDER BY $field $sortOrder";
+           
         $result = $this->db->query($sql);
         $articles = [];
 
@@ -22,38 +27,22 @@ class ArticleManager extends AbstractEntityManager
             $article->setCommentCounter($commentCounter);
             
             $articles[] = $article;
-            //var_dump($articleArray);
         }
         
         return $articles;
     }
 
-        /**
-     * Récupère tous les articles triés.
-     * @param $field champ à trier
-     * @return array : un tableau d'objets Article.
-     */
-    public function getAllArticlesSorted($field, $sortOrder) : array
-    {
-        $sql = "SELECT a.*, COUNT(DISTINCT c.id) as commentCounter FROM article a 
-        LEFT JOIN comment c ON a.id = c.id_article GROUP BY c.id_article
-        ORDER BY $field $sortOrder";
-        $result = $this->db->query($sql);
-        $articles = [];
-
-        while ($articleArray = $result->fetch()) {
-            $article = new Article($articleArray);
-            $commentCounter=$articleArray["commentCounter"];
-            $article->setCommentCounter($commentCounter);
-            
-            $articles[] = $article;
-            //var_dump($articleArray);
+    function white_list(&$value, $allowed, $message) {
+        if ($value === null) {
+            return $allowed[0];
         }
-        
-        return $articles;
+        $key = array_search($value, $allowed, true);
+        if ($key === false) { 
+            throw new InvalidArgumentException($message); 
+        } else {
+            return $value;
+        }
     }
-
-
 
     /**
      * Récupère un article par son id.
@@ -106,7 +95,7 @@ class ArticleManager extends AbstractEntityManager
      */
     public function addArticle(Article $article) : void
     {
-        $sql = "INSERT INTO article (id_user, title, content, date_creation) VALUES (:id_user, :title, :content, NOW())";
+        $sql = "INSERT INTO article (id_user, title, content, date_creation, date_update) VALUES (:id_user, :title, :content, NOW(), NOW())";
         $this->db->query($sql, [
             'id_user' => $article->getIdUser(),
             'title' => $article->getTitle(),
