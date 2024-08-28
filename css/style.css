@@ -356,11 +356,9 @@ a.info {
     background-color: rgb(255, 179, 47);
 }
 
-.fa-sort-up .fa-sort-down {
+.title .fa-sort-up {
     display: flex;
     justify-content: center;
-    color:red;
-    background-color: #3f56a4;
 }
 
 .fa-sort-up:visited {
