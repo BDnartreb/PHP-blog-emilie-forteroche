@@ -6,13 +6,14 @@
 class ArticleManager extends AbstractEntityManager 
 {
     /**
-     * Récupère tous les articles.
+     * Récupère tous les articles et les trie selon le champ demandé dans l'ordre demandé.
+     * @param : champ à trier, ordre de tri
      * @return array : un tableau d'objets Article.
      */
     public function getAllArticles($field="id", $sortOrder="ASC") : array
     {
-        //Pour sécurité vérifier que $field correspond à un élément d'une white_liste, liste de valeurs autorisées
-        $field = $this->white_list($field, ["id", "title","view_counter", "commentCounter", "date_creation"], "Invalid field name");
+        //Pour sécuriser, vérifier que $field correspond à un élément d'une white_liste, liste de valeurs autorisées
+        $field = $this->white_list($field, ["id", "title", "view_counter", "commentCounter", "date_creation"], "Invalid field name");
         $sortOrder = $this->white_list($sortOrder, ["ASC","DESC"], "Invalid ORDER BY direction");
         
         $sql = "SELECT a.*, COUNT(DISTINCT c.id) as commentCounter FROM article a 
@@ -31,6 +32,13 @@ class ArticleManager extends AbstractEntityManager
         
         return $articles;
     }
+
+     /**
+     * Vérifie que la valeur passée en paramètre correspond à une liste préétablie.
+     * Pour éviter les failles de sécurité d'une commande passée via l'URL
+     * @param : valeur passée en paramètre, tableau des valeurs autorisée, message d'erreur
+     * @return array : valeur par défaut (première de la liste) ou valeur demandée validée.
+     */
 
     function white_list(&$value, $allowed, $message) {
         if ($value === null) {
@@ -55,6 +63,7 @@ class ArticleManager extends AbstractEntityManager
         $result = $this->db->query($sql, ['id' => $id]);
         $article = $result->fetch();
         if ($article) {
+            var_dump($article);
             return new Article($article);
         }
         return null;
@@ -62,6 +71,7 @@ class ArticleManager extends AbstractEntityManager
 
         /**
          * Increase number of article views
+         * @param Article object
          * @return void
          */
         

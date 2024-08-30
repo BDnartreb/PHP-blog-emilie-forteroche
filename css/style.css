@@ -361,9 +361,12 @@ a.info {
     justify-content: center;
 }
 
-.fa-sort-up:visited {
+.active {
     color: red;
+}
 
+.activeblue {
+    color: blue;
 }
 
 .articleLine > div {
