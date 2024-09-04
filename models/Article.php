@@ -11,8 +11,8 @@
     private string $content = "";
     private ?DateTime $dateCreation = null;
     private ?DateTime $dateUpdate = null;  
-    public int $viewCounter = 0;
-    public int $commentCounter = 0;
+    private int $viewCounter = 0;
+    private int $commentCounter = 0;
 
     /**
      * Setter pour l'id de l'utilisateur. 
@@ -163,4 +163,4 @@
     {
         return $this->commentCounter;
     }
- }
+}

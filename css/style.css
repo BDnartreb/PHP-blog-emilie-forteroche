@@ -365,10 +365,6 @@ a.info {
     color: red;
 }
 
-.activeblue {
-    color: blue;
-}
-
 .articleLine > div {
     padding: 20px;
     border: 1px solid var(--backgroundColor);

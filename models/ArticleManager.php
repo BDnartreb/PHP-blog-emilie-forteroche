@@ -63,25 +63,24 @@ class ArticleManager extends AbstractEntityManager
         $result = $this->db->query($sql, ['id' => $id]);
         $article = $result->fetch();
         if ($article) {
-            var_dump($article);
             return new Article($article);
         }
         return null;
     }
 
-        /**
-         * Increase number of article views
-         * @param Article object
-         * @return void
-         */
-        
-        public function increaseViewCounter(Article $article) : void
-        {
-            $sql = "UPDATE article SET view_counter = view_counter+1 WHERE id = :id";
-            $this->db->query($sql, [
-                'id' => $article->getId()
-            ]);
-        }
+    /**
+     * Increase number of article views
+     * @param Article object
+     * @return void
+     */
+    
+    public function increaseViewCounter(Article $article) : void
+    {
+        $sql = "UPDATE article SET view_counter = view_counter+1 WHERE id = :id";
+        $this->db->query($sql, [
+            'id' => $article->getId()
+        ]);
+    }
 
     /**
      * Ajoute ou modifie un article.

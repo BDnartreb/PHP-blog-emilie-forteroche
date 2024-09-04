@@ -30,7 +30,8 @@
         <?php foreach ($comments as $comment) {?>
             <li>
                 <div class="smiley">☻
-                    <a href="index.php?action=deleteComment&id=<?= $comment->getId() ?>" <?= Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer ce commentaire ?") ?> ><i class="fa-regular fa-trash-can"></i></a>
+                    <a href="index.php?action=deleteComment&id=<?= $comment->getId() ?>" <?= Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer ce commentaire ?") ?> >
+                        <i class="fa-regular fa-trash-can"></i></a>
                 </div>
                 <div class="detailComment">
                     <h3 class="info">Le <?= Utils::convertDateToFrenchFormat($comment->getDateCreation()) ?><?=Utils::format($comment->getPseudo())?>a écrit :</h3>
